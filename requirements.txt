@@ -1,1 +1,4 @@
 npm install express
+npm install drizzle-orm @neondatabase/serverless
+npm install drizzle-kit drizzle-orm pg dotenv
+npm install nodemon --save-dev
