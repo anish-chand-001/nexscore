@@ -32,7 +32,7 @@ export const matches = pgTable("matches", {
 
   awayScore: integer("away_score").default(0),
 
-  status: matchStatusEnum("status").default("LIVE").notNull(),
+  status: matchStatusEnum("status").default("SCHEDULED").notNull(),
 
   startTime: timestamp("start_time").notNull(),
 
