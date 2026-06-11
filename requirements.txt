@@ -3,3 +3,5 @@ npm install drizzle-orm @neondatabase/serverless
 npm install drizzle-kit drizzle-orm pg dotenv
 npm install nodemon --save-dev
 npm install zod --save-dev
+npm install ws
+npm install dotenv

@@ -8,10 +8,26 @@ import {
 
 export const matchesRouter = Router();
 
-matchesRouter.get("/", (req, res) => {
-  res.status(200).json({ message: "Matches route" });
+// GET: Fetch all matches (Limit 50)
+matchesRouter.get("/", async (req, res) => {
+  try {
+    const allMatches = await db.select().from(matches).limit(50);
+
+    return res.status(200).json({
+      message: "Matches fetched successfully",
+      count: allMatches.length,
+      data: allMatches,
+    });
+  } catch (error) {
+    console.error("Failed to fetch matches:", error);
+
+    return res.status(500).json({
+      message: "Failed to fetch matches",
+    });
+  }
 });
 
+// POST: Create a match
 matchesRouter.post("/", async (req, res) => {
   const parsed = createMatchSchema.safeParse(req.body);
 
@@ -29,6 +45,10 @@ matchesRouter.post("/", async (req, res) => {
       .insert(matches)
       .values(matchData)
       .returning();
+
+      if(res.app.locals.broadcastMatchCreated){
+        res.app.locals.broadcastMatchCreated(createdMatch); 
+      }
 
     return res.status(201).json({
       message: "Match created successfully",
